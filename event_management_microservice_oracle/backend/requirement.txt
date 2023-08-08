@@ -1,0 +1,5 @@
+configparser==5.3.0
+requests==2.31.0
+urllib3==2.0.3
+Flask==2.3.2
+cx-Oracle==8.3.0

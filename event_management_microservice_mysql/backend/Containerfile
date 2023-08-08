@@ -1,0 +1,7 @@
+FROM  python:3.9.17-alpine3.18
+RUN mkdir -p /flask /config
+WORKDIR /flask
+RUN pip install --upgrade pip
+COPY . /flask/.
+RUN pip3 install -r requirement.txt
+CMD [ "python3", "backend.py"]

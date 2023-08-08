@@ -1,0 +1,28 @@
+Change backend/config/app.config according to the environment
+
+---------How to Create image----------
+cd frontend
+podman build -t rcc-fest-frontend:1.0 -f Containerfile
+
+
+cd backend
+podman build -t rcc-fest-api:1.0 -f Containerfile
+
+---------How To Start------------------
+
+#1. Create Network
+podman network create rccnet
+
+
+#2. Then Start API:
+podman run  -d --name rccapi   -p 6200:6200 rcc-fest-api:1.0
+
+
+#3. Then Start Frontend:
+podman run  -d --name rccfrontend  -p 9200:9200 rcc-fest-frontend:1.0
+
+
+
+#4. Goto http://localhost:9200
+
+

@@ -1,0 +1,47 @@
+---How to Create image
+cd frontend
+podman build -t rcc-fest-frontend:1.0 -f Containerfile
+
+
+cd backend
+podman build -t rcc-fest-api:1.0 -f Containerfile
+
+---------How To Start------------------
+
+#1. Create Volume
+podman volume create rccvol
+
+
+#2. Create Network
+podman network create rccnet
+
+
+#3. Then Start Database:
+podman run  -d --name rccmysql --network rccnet -v rccvol:/var/lib/mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=event  mysql
+
+
+#4. Then Start API:
+podman run  -d --name rccapi --network rccnet  -p 6200:6200 rcc-fest-api:1.0
+
+
+#5. Then Start Frontend:
+podman run  -d --name rccfrontend --network rccnet  -p 9200:9200 rcc-fest-frontend:1.0
+
+
+#6. Create Database Table Manually:
+
+CREATE TABLE `eventdata` (
+  `name` varchar(50) DEFAULT NULL,
+  `email` varchar(50) NOT NULL,
+  `phone` varchar(15) NOT NULL,
+  `gender` varchar(6) DEFAULT NULL,
+  `field` varchar(20) DEFAULT NULL,
+  `stream` varchar(20) DEFAULT NULL,
+  `comments` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+#7. Goto http://localhost:9200
+
+

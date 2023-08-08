@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RCCIIT Regalia - Submit Details</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+            position: -webkit-sticky; /* Safari */
+            position: sticky;
+            top: 0;
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover {
+            background-color: #111;
+        }
+
+        .active {
+            background-color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li><a class="active" href="#Summary">Register</a></li>
+        <li><a href="{{ url_for('details') }}">View Details</a></li>
+    </ul>
+    <br><br>
+    <div class="header"></div>
+    <div class="container">
+        <form method="post" action="/insert">
+            <h1>Enter Details</h1>
+            <label for="name">Name *</label>
+            <input type="text" id="name" name="name" autocomplete="off" required>
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" autocomplete="off" required>
+            <div id="email-error" style="display: none; color: red;">Invalid email address</div>
+            <label for="phone">Phone (with country code) *</label>
+            <input type="tel" id="phone" name="phone" autocomplete="off" required>
+            <div id="phone-error" style="display: none; color: red;">Invalid phone number</div>
+            <label for="gender">Gender *</label>
+            <select name="gender" required>
+                <option value="">Select a gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Others">Others</option>
+            </select>
+            <br>
+            <label for="stream">Stream *</label>
+            <select name="stream" required>
+                <option value="">Select a field</option>
+                <option value="B.Tech(CSE)">B.Tech(CSE)</option>
+                <option value="B.Tech(IT)">B.Tech(IT)</option>
+                <option value="BCA">BCA</option>
+                <option value="MCA">MCA</option>
+            </select>
+            <label for="perform">Field *</label>
+            <select name="perform" required>
+                <option value="">Select a field</option>
+                <option value="Workshops">Workshops</option>
+                <option value="Exhibitions">Exhibitions</option>
+                <option value="Coding Competitions">Coding Competitions</option>
+                <option value="Demo Session">Demo Session</option>
+                <option value="Guest Lectures">Guest Lectures</option>
+            </select>
+            <br>
+            <label for="comments">Comments *</label>
+            <textarea id="comments" name="comments" rows="6" cols="50" style="font-size: 16px; color: #333;" required></textarea>
+            <br><br>
+            <input type="submit" name="submit" id="submit" value="Submit">
+            <script>
+                var myButton = document.getElementById("submit");
+
+                const emailInput = document.getElementById("email");
+                const emailError = document.getElementById("email-error");
+
+                function isValidEmail(email) {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    return emailRegex.test(email);
+                }
+
+                emailInput.addEventListener("input", handleInputChange);
+
+                function handleInputChange(event) {
+                    const emailValue = event.target.value;
+
+                    if (emailValue == "") {
+                        emailError.style.display = "none";
+                    } else if (isValidEmail(emailValue)) {
+                        emailError.style.display = "none";
+                        myButton.disabled = false;
+                    } else {
+                        emailError.style.display = "block";
+                        myButton.disabled = true;
+                    }
+                }
+
+                const phoneNumber = document.getElementById("phone");
+                const phoneError = document.getElementById("phone-error");
+
+                function isValidPhoneNumber(phoneNumber) {
+                    const phoneRegex = /^\+(?:[0-9] ?){9,14}[0-9]{1,2}$/;
+                    return phoneRegex.test(phoneNumber);
+                }
+
+                phoneNumber.addEventListener("input", handleInputChange1);
+
+                function handleInputChange1(event) {
+                    const phoneNumberValue = event.target.value;
+
+                    if (phoneNumberValue == "") {
+                        phoneError.style.display = "none";
+                    } else if (isValidPhoneNumber(phoneNumberValue)) {
+                        phoneError.style.display = "none";
+                        myButton.disabled = false;
+                    } else {
+                        phoneError.style.display = "block";
+                        myButton.disabled = true;
+                    }
+                }
+            </script>
+        </form>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,14 @@
+FROM  python:3.9.17-alpine3.18
+RUN mkdir -p /flask /config
+WORKDIR /flask
+RUN pip install --upgrade pip
+RUN wget https://download.oracle.com/otn_software/linux/instantclient/214000/instantclient-basic-linux.x64-21.4.0.0.0dbru.zip
+RUN unzip -d /opt/oracle  instantclient-basic-linux.x64-21.4.0.0.0dbru.zip && rm instantclient-basic-linux.x64-21.4.0.0.0dbru.zip
+ENV LD_LIBRARY_PATH="/opt/oracle/instantclient_21_4:${LD_LIBRARY_PATH}"
+ENV PATH="${LD_LIBRARY_PATH}:${PATH}"
+RUN apk add --no-cache build-base 
+RUN apk add --no-cache libaio 
+RUN apk add --no-cache gcompat 
+COPY . /flask/.
+RUN pip3 install -r requirement.txt
+CMD [ "python3", "backend.py"]
